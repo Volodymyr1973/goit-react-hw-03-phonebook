@@ -10,11 +10,9 @@ export class ContactForm extends Component {
   };
 
   handleChange = event => {
-    if (event.target.name === 'name') {
-      this.setState({ name: event.currentTarget.value });
-    } else if (event.target.name === 'number') {
-      this.setState({ number: event.currentTarget.value });
-    }
+    this.setState({
+      [event.target.name]: [event.target.value].join(),
+    });
   };
 
   handleSubmit = event => {
@@ -26,10 +24,6 @@ export class ContactForm extends Component {
       name: userContact,
       number: userNumber,
     };
-    // const doubleContact = this.props.contacts
-    //   .map(contact => contact.name.toLowerCase())
-    //   .includes(this.state.name.toLowerCase());
-
     const doubleContact = this.props.contacts.some(
       ({ name }) => name.toLowerCase() === this.state.name.toLowerCase()
     );
@@ -87,12 +81,6 @@ export class ContactForm extends Component {
 }
 
 ContactForm.propTypes = {
-  state: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      number: PropTypes.number,
-    })
-  ),
   contacts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
